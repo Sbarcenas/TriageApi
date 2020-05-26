@@ -14,7 +14,8 @@ class PatientsController extends Controller
      */
     public function index()
     {
-        //
+        return Patients::all();
+
     }
 
     /**
@@ -25,40 +26,44 @@ class PatientsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Patients::create($request->all());
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Patients  $patients
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Patients $patients)
+    public function show($id)
     {
-        //
+        return Patients::find($id);
     }
 
     /**
      * Update the specified resource in storage.
-     *
+     * @param  int $id
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Patients  $patients
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Patients $patients)
+    public function update($id, Request $request)
     {
-        //
+        $triage = $this->show($id);
+        $triage->fill($request->all())->save();
+        return $triage;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Patients  $patients
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Patients $patients)
+    public function destroy($id)
     {
-        //
+        $triage = $this->show($id);
+        $triage->delete();
+        return $triage;
     }
 }
